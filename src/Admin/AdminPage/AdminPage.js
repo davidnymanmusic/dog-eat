@@ -21,13 +21,9 @@ function AdminPage() {
   ];
   return (
     <Router>
-      <ul id="nav">
-        <li>
-          <a href="/">Home</a>
-        </li>
-      </ul>
       <div>
         <div className="sidenav">
+          <a href="/">Home</a>
           {sidebarList.map(item => (
             <Link key={item.title} to={item.link}>
               <p>{item.title}</p>

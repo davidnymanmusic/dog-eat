@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
-import { Link } from 'react-router-dom';
-import FoodForm from '../Admin/FoodFormOld';
-
 import axios from 'axios';
 
-import '../App.css';
 import Autocomplete from '../components/Autocomplete';
-import AdminPage from '../Admin/AdminPage';
+import { APP_URL } from '../constants';
 
 const images = [
   'https://i.imgur.com/4kO8f8O.png',
@@ -17,7 +12,7 @@ const images = [
 let currentImage = 0;
 const imageMax = 2;
 
-function App(props) {
+function Home() {
   const [image, setImage] = useState(images[currentImage]);
   const [food, setFood] = useState({});
   const [foodData, setFoodData] = useState([]);
@@ -26,7 +21,7 @@ function App(props) {
   }, []);
 
   const fetchFood = async () => {
-    await axios.get('http://localhost:5000/api/foods').then(res => {
+    await axios.get(APP_URL + 'foods').then(res => {
       const foodData = res.data.data;
       setFoodData(foodData);
     });
@@ -92,4 +87,4 @@ function App(props) {
   );
 }
 
-export default App;
+export default Home;

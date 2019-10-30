@@ -14,13 +14,9 @@ class Autocomplete extends Component {
     super(props);
 
     this.state = {
-      // The active selection's index
       activeSuggestion: 0,
-      // The suggestions that match the user's input
       filteredSuggestions: [],
-      // Whether or not the suggestion list is shown
       showSuggestions: false,
-      // What the user has entered
       userInput: '',
     };
   }
@@ -35,7 +31,7 @@ class Autocomplete extends Component {
       .sort()
       .filter(
         suggestion =>
-          suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+          suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
       );
 
     this.setState({
@@ -69,7 +65,7 @@ class Autocomplete extends Component {
       const result = this.props.suggestions.filter(
         suggestion =>
           suggestion.name.toLowerCase() ===
-          filteredSuggestions[activeSuggestion].toLowerCase()
+          filteredSuggestions[activeSuggestion].toLowerCase(),
       );
 
       this.props.getFood(result[0]);
@@ -146,6 +142,7 @@ class Autocomplete extends Component {
           onKeyDown={onKeyDown}
           onKeyPress={this.props.onKeyPress}
           value={userInput}
+          placeholder="Search"
         />
         {suggestionsListComponent}
       </>

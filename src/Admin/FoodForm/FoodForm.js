@@ -5,16 +5,17 @@ import { useToggle } from '../../hooks/useToggle';
 import axios from 'axios';
 import TagSelect from '../../components/TagSelect/TagSelect';
 import FoodTable from './FoodTable';
+import { APP_URL } from '../../constants';
 
 function NewFoodForm() {
   const fetchFood = async () => {
-    await axios.get('http://localhost:5000/api/foods').then(res => {
+    await axios.get(APP_URL + 'foods').then(res => {
       const foodData = res.data;
       setFoodData(foodData.data);
     });
   };
   const fetchCategories = async () => {
-    await axios.get('http://localhost:5000/api/categories').then(res => {
+    await axios.get(APP_URL + 'categories').then(res => {
       const categoriesData = res.data;
       setCategories(categoriesData.data);
     });
@@ -34,11 +35,12 @@ function NewFoodForm() {
   const [edible, setEdible] = useToggle(true);
   const [dogfood, setDogfood] = useToggle(true);
   const [tags, setTags] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     fetchFood();
     fetchCategories();
-  }, [foodData]);
+  }, []);
 
   const onChange = e => {
     setFood({
@@ -70,15 +72,25 @@ function NewFoodForm() {
   const selectTags = tags => {
     if (tags) setTags(tags.map(t => t.value));
   };
+
+  const filterFood = () => {
+    const filter = foodData.filter(food => {
+      let f =
+        food.name.toLowerCase() +
+        food.description.toLowerCase() +
+        food.category.toLowerCase();
+      return f.indexOf(search.toLowerCase()) !== -1;
+    });
+    return filter;
+  };
+  useEffect(() => {
+    filterFood();
+  }, [search]);
   return (
     <div>
       {/* {edit ? 'TRUE' : 'false'} */}
-      <FoodTable
-        foods={foodData}
-        // editRow={food => changeState(food)}
-        // deleteFood={id => deleteFood(id)}
-      />
-      <form onSubmit={handleSubmit}>
+
+      <form className="form" onSubmit={handleSubmit}>
         <br />
         <input
           onChange={onChange}
@@ -142,6 +154,17 @@ function NewFoodForm() {
         </div>
         <button>SUBMIT</button>
       </form>
+      <input
+        placeholder="Search for food"
+        onChange={e => {
+          setSearch(e.target.value);
+        }}
+      ></input>
+      <FoodTable
+        foods={filterFood()}
+        // editRow={food => changeState(food)}
+        // deleteFood={id => deleteFood(id)}
+      />
     </div>
   );
 }

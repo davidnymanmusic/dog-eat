@@ -293,10 +293,15 @@ body {
 }
 
 input {
-  /* border-bottom: 1px solid #999;
-  padding: 0.5rem; */
+  border: none;
+  border-bottom: 4px solid #999;
+  padding: 0.5rem;
   width: 300px;
   font-family: 'Futura-Bold', arial;
+  font-size: 2em;
+}
+input:focus {
+  outline-color: #aaa;
 }
 
 .no-suggestions {
@@ -353,6 +358,10 @@ input {
 .dogfood {
   font-style: italic;
   color: #999;
+}
+
+.form {
+  width: 60%;
 }
 
 @media screen and (max-height: 450px) {
