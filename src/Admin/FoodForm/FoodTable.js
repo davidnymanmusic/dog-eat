@@ -49,7 +49,7 @@ const FoodTable = props => (
               >
                 Edit
               </button>
-              <button onClick={() => props.deleteFood(food.id)}>Delete</button>
+              <button onClick={() => props.deleteFood(food._id)}>Delete</button>
             </td>
           </tr>
         ))
