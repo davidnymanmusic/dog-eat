@@ -41,7 +41,7 @@ function TagForm(props) {
   const addTag = tag => {
     console.log('taaag', tag);
     if (edit) {
-      axios.patch(`${APP_URL}tags/${tag.id}`, tag);
+      axios.put(`${APP_URL}tags/${tag.id}`, tag);
       setTimeout(() => {
         fetchTags();
       }, 1000);

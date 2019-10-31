@@ -38,20 +38,21 @@ function CategoryForm(props) {
 
   const changeState = category => {
     setEdit(true);
-
     setCategory(category);
   };
 
   const addCategory = category => {
     if (edit) {
-      axios.patch(`http://localhost:8888/category/${category.id}`, category);
+      axios.put(
+        `http://localhost:5000/api/categories/${category._id}`,
+        category,
+      );
       setTimeout(() => {
         fetchCategories();
       }, 1000);
     } else {
-      category.id = categories.length + 1;
       axios
-        .post(`http://localhost:8888/category`, category)
+        .post(`http://localhost:5000/api/categories`, category)
         .then(function(response) {
           setCategories([...categories, category]);
           console.log(response);
@@ -65,8 +66,8 @@ function CategoryForm(props) {
 
   const deleteCategory = id => {
     //  setEditing(false);
-    axios.delete(`http://localhost:8888/category/${id}`).then(res => {
-      setCategories(categories.filter(category => category.id !== id));
+    axios.delete(`http://localhost:5000/api/categories/${id}`).then(res => {
+      setCategories(categories.filter(category => category._id !== id));
     });
   };
 

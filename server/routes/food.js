@@ -74,7 +74,6 @@ foods.get('/:id', async (req, res) => {
   }).catch(err => console.log(err));
 });
 foods.put('/:id', async (request, response) => {
-  console.log('PUTT ');
   try {
     var food = await Food.findById(request.params.id).exec();
     food.set(request.body);

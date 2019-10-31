@@ -23,10 +23,18 @@ function Home() {
   const [typing, setTyping] = useState(true);
   const [edible, setEdible] = useState(true);
   const [browse, setBrowse] = useState(false);
+  const [tagLabel, setTagLabel] = useState('');
 
   useEffect(() => {
     fetchFood();
   }, []);
+  const colorize = edible => {
+    if (edible) {
+      return 'yes';
+    } else {
+      return 'no';
+    }
+  };
 
   const fetchFood = async () => {
     await axios.get(APP_URL + 'foods').then(res => {
@@ -43,15 +51,9 @@ function Home() {
   const fetchTagged = async tag => {
     const response = await axios.get(APP_URL + `queries/tags/?tag=${tag}`);
     setTagged(response.data.foods);
+    setTagLabel(tag);
   };
 
-  const colorize = edible => {
-    if (edible) {
-      return 'yes';
-    } else {
-      return 'no';
-    }
-  };
   const onKeyPress = event => {
     currentImage = (imageMax + currentImage - 1) % imageMax;
     setImage(images[currentImage]);
@@ -59,7 +61,7 @@ function Home() {
 
   const getFood = food => {
     setFood(food);
-    setTyping(false);
+
     setEdible(food.edible);
     setFoodByCategory([]);
     setTagged([]);
@@ -70,26 +72,65 @@ function Home() {
     }
   };
 
+  const isTyping = type => {
+    setTyping(type);
+  };
+
   return (
     <div className="home">
       <div className="sidenav">
-        <button
-          className="toggle"
-          onClick={() => fetchRelatedFoods('category', food.category, false)}
-        >
-          Non Edible {food.category}
-        </button>
-        <button
-          className="toggle"
-          onClick={() => fetchRelatedFoods('category', food.category, true)}
-        >
-          Other Edible {food.category}
-        </button>
+        {foodByCategory.length ? (
+          <>
+            {!food.edible ? (
+              <button
+                className={'toggle'}
+                style={{ border: '2px solid red' }}
+                onClick={() =>
+                  fetchRelatedFoods('category', food.category, false)
+                }
+              >
+                Non Edible {food.category}
+              </button>
+            ) : (
+              <button
+                className={'toggle'}
+                style={{ border: '2px solid green' }}
+                onClick={() =>
+                  fetchRelatedFoods('category', food.category, true)
+                }
+              >
+                Other Edible {food.category}
+              </button>
+            )}
+            {food.edible ? (
+              <button
+                className={'toggle'}
+                style={{ border: '2px solid red' }}
+                onClick={() =>
+                  fetchRelatedFoods('category', food.category, false)
+                }
+              >
+                Non Edible {food.category}
+              </button>
+            ) : (
+              <button
+                className={'toggle'}
+                style={{ border: '2px solid green' }}
+                onClick={() =>
+                  fetchRelatedFoods('category', food.category, true)
+                }
+              >
+                Other Edible {food.category}
+              </button>
+            )}
+          </>
+        ) : null}
         {foodByCategory.length > 0
           ? foodByCategory
               .sort((a, b) => (a.name > b.name ? 1 : -1))
               .map(f => (
                 <li
+                  style={{ color: food.edible ? 'green' : 'red' }}
                   onClick={() => {
                     setBrowse(true);
                     setFood(f);
@@ -98,19 +139,28 @@ function Home() {
                   {f.name}
                 </li>
               ))
-          : 'None'}
-        <div>
-          <h3>Related Foods</h3>
-          {foodByTags.map(f => (
-            <li>{f.name}</li>
-          ))}
-        </div>
+          : null}
+        {foodByTags.length ? (
+          <div>
+            <h3>Related to {tagLabel}</h3>
+            {foodByTags.map(f => (
+              <li
+                onClick={() => {
+                  setBrowse(true);
+                  setFood(f);
+                }}
+              >
+                {f.name}
+              </li>
+            ))}
+          </div>
+        ) : null}
       </div>
       <a href="/admin">Admin</a>
       <h1> Dog Eat ? </h1>
       <div className="description">
         <img className="arthur" src={image} alt="arthur" />
-        <Bubble typing={typing} edible={food.edible}></Bubble>
+        <Bubble edible={food.edible} typing={typing}></Bubble>
         <br />
         {browse ? (
           <h1 className="placeholder" onClick={() => setBrowse(false)}>
@@ -122,7 +172,7 @@ function Home() {
             suggestions={foodData}
             onKeyPress={onKeyPress}
             placeholder={'Search'}
-            name="auto"
+            typing={isTyping}
           />
         )}
         {food.edible !== undefined ? (
@@ -132,15 +182,16 @@ function Home() {
                 ? ` ${food.edible ? 'Yes' : 'No'} to ${food.name}!`
                 : null}
             </h1>
-
             <p>{food.description !== undefined ? food.description : null} </p>
-            <p
-              onClick={() =>
-                fetchRelatedFoods('category', food.category, edible)
-              }
-            >
-              {food.category !== undefined ? food.category : null}{' '}
-            </p>
+            {food.category !== null ? (
+              <button
+                onClick={() =>
+                  fetchRelatedFoods('category', food.category, edible)
+                }
+              >
+                More {food.category ? food.category : 'Food'}s
+              </button>
+            ) : null}{' '}
             <p className="dogfood">
               {food.dog_food
                 ? 'This can be found in dog food ingredients'
@@ -149,7 +200,9 @@ function Home() {
             <div>
               {food.tags.map(t => (
                 <span
-                  onClick={() => fetchTagged(t)}
+                  onClick={() => {
+                    fetchTagged(t);
+                  }}
                   className="tags"
                 >{`${t} `}</span>
               ))}

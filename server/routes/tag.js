@@ -47,4 +47,14 @@ tags.get('/', async (req, res) => {
     return res.status(200).json({ success: true, data: tags });
   }).catch(err => console.log(err));
 });
+
+tags.put('/:id', async (request, response) => {
+  try {
+    var tag = await Tag.findById(request.params.id).exec();
+    tag.set(request.body);
+    tag.save();
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
 module.exports = tags;

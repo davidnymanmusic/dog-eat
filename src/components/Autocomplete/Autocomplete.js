@@ -56,7 +56,7 @@ class Autocomplete extends Component {
 
   onKeyDown = e => {
     const { activeSuggestion, filteredSuggestions, userInput } = this.state;
-
+    this.props.typing(true);
     // User pressed the enter key
     if (e.keyCode === 13 && userInput !== '' && filteredSuggestions.length) {
       this.setState({
@@ -72,6 +72,7 @@ class Autocomplete extends Component {
       );
 
       this.props.getFood(result[0]);
+      this.props.typing(false);
     }
     // User pressed the up arrow
     else if (e.keyCode === 38) {

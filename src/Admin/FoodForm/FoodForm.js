@@ -90,6 +90,8 @@ function FoodForm(props) {
       axios
         .put(`http://localhost:5000/api/foods/${food._id}`, food)
         .then(res => console.log(res));
+      setFood(initialState);
+      setTags([]);
       setTimeout(() => {
         fetchFood();
       }, 1000);
@@ -155,8 +157,13 @@ function FoodForm(props) {
               placeholder="description"
             />
             <br />
-            <select name="category" onChange={onChange} required>
-              <option>Select Category</option>
+            <select
+              name="category"
+              onChange={onChange}
+              required
+              value={food.category ? food.category : 0}
+            >
+              <option value={0}>Select Category</option>
               {categories.map(c => (
                 <option value={c.name}>{c.name}</option>
               ))}

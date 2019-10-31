@@ -22,24 +22,11 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-const Category = require('./models/category');
-
 // app.use('/api', foodRouter);
 app.use('/api/foods', routes.foodRouter);
 app.use('/api/tags', routes.tagRouter);
+app.use('/api/categories', routes.categoryRouter);
 app.use('/api/queries', routes.queryRouter);
-
-app.get('/api/categories', async (req, res) => {
-  await Category.find({}, (err, categories) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
-    if (!categories.length) {
-      return res.status(404).json({ success: false, error: `Tag not found` });
-    }
-    return res.status(200).json({ success: true, data: categories });
-  }).catch(err => console.log(err));
-});
 
 app.use(express.static(path.join(__dirname, '..', 'build')));
 
