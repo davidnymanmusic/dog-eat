@@ -5,6 +5,9 @@ class Autocomplete extends Component {
   static propTypes = {
     suggestions: PropTypes.instanceOf(Array),
   };
+  componentDidMount() {
+    this.nameInput.focus();
+  }
 
   static defaultProps = {
     suggestions: [],
@@ -137,12 +140,15 @@ class Autocomplete extends Component {
     return (
       <>
         <input
+          ref={input => {
+            this.nameInput = input;
+          }}
           type="text"
           onChange={onChange}
           onKeyDown={onKeyDown}
           onKeyPress={this.props.onKeyPress}
           value={userInput}
-          placeholder="Search"
+          placeholder={this.props.placeholder}
         />
         {suggestionsListComponent}
       </>

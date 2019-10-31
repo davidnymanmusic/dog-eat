@@ -27,6 +27,7 @@ const Category = require('./models/category');
 // app.use('/api', foodRouter);
 app.use('/api/foods', routes.foodRouter);
 app.use('/api/tags', routes.tagRouter);
+app.use('/api/queries', routes.queryRouter);
 
 app.get('/api/categories', async (req, res) => {
   await Category.find({}, (err, categories) => {

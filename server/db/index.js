@@ -6,7 +6,7 @@ let dbPassword = process.env.DB_PASSWORD;
 mongoose
   .connect(
     `mongodb+srv://${dbUser}:${dbPassword}@cluster0-78oyj.mongodb.net/dogeat?retryWrites=true&w=majority`,
-    { useNewUrlParser: true }
+    { useNewUrlParser: true, useUnifiedTopology: true },
   )
   .catch(e => {
     console.error('Connection error', e.message);

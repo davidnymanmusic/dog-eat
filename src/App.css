@@ -187,6 +187,28 @@ button {
   max-width: 500px;
   margin: 2px 6px;
 }
+.toggle {
+  outline: none;
+  background-color: black;
+  border: none;
+  padding: 1em;
+  color: white;
+  font-family: 'Futura-Bold', arial;
+  font-size: 1em;
+  width: 100%;
+  max-width: 500px;
+  margin: 2px 6px;
+}
+.placeholder {
+  border: none;
+  border-bottom: 4px solid #999;
+  width: 300px;
+  font-family: 'Futura-Bold', arial;
+  font-size: 2em;
+  margin: 0 auto;
+  text-align: left;
+  line-height: 66px;
+}
 
 tr:nth-child(2n) {
   background: #ccc;
@@ -267,6 +289,8 @@ textarea {
   background-color: white;
   overflow-x: hidden;
   padding-top: 20px;
+  text-align: left;
+  list-style: none;
 }
 
 .sidenav a {
@@ -460,6 +484,13 @@ input:focus {
   margin: 0;
   padding: 0;
   box-shadow: 0px 0px 34px -3px rgba(196, 196, 196, 1);
+}
+
+@keyframes spin {
+  50% {
+    -webkit-transform: rotateY(90deg);
+    transform: rotateY(90deg);
+  }
 }
 @keyframes dots-1 {
   from {
