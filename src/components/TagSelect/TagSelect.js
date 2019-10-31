@@ -22,14 +22,16 @@ const TagSelect = props => {
 
   const handleChange = newValue => {
     props.selectTags(newValue);
+    console.log();
   };
-
+  console.log(props.value);
   return (
     <CreatableSelect
       placeholder={'Select or enter tags'}
       isMulti
       onChange={handleChange}
       options={tags}
+      value={props.value}
     />
   );
 };

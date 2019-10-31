@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useToggle } from '../../hooks/useToggle';
 import CategoryTable from './CategoryTable';
 
-function NewFoodForm() {
+function CategoryForm(props) {
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -72,7 +72,7 @@ function NewFoodForm() {
 
   return (
     <div>
-      {/* {edit ? 'TRUE' : 'false'} */}
+      <h1>{props.title}</h1>
       <CategoryTable
         categories={categories}
         editRow={category => changeState(category)}
@@ -95,4 +95,4 @@ function NewFoodForm() {
     </div>
   );
 }
-export default NewFoodForm;
+export default CategoryForm;

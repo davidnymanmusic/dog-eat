@@ -16,6 +16,7 @@ function Home() {
   const [image, setImage] = useState(images[currentImage]);
   const [food, setFood] = useState({});
   const [foodData, setFoodData] = useState([]);
+  const [typing, setTyping] = useState(true);
   useEffect(() => {
     fetchFood();
   }, []);
@@ -41,6 +42,7 @@ function Home() {
 
   const getFood = food => {
     setFood(food);
+    setTyping(false);
     if (food.edible) {
       setImage('https://i.imgur.com/4kO8f8O.png');
     } else {
@@ -54,6 +56,26 @@ function Home() {
       <h1> Dog Eat ? </h1>
       <div className="description">
         <img className="arthur" src={image} alt="arthur" />
+        <span className="bubble">
+          <span
+            id="bubbleText"
+            className={'oval-speech'}
+            style={{ top: '-200px' }}
+          >
+            {typing ? (
+              <span class="dots">
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </span>
+            ) : food.edible ? (
+              'Yes'
+            ) : (
+              'No'
+            )}
+          </span>
+        </span>
+
         <br />
         <Autocomplete
           getFood={getFood}

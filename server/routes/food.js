@@ -73,46 +73,15 @@ foods.get('/:id', async (req, res) => {
     return res.status(200).json({ success: true, data: food });
   }).catch(err => console.log(err));
 });
-
-foods.patch('/:id', async (req, res) => {
-  const body = req.body;
-
-  if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: 'You must provide a body to update',
-    });
+foods.put('/:id', async (request, response) => {
+  console.log('PUTT ');
+  try {
+    var food = await Food.findById(request.params.id).exec();
+    food.set(request.body);
+    food.save();
+  } catch (error) {
+    response.status(500).send(error);
   }
-
-  Food.findOne({ _id: req.params.id }, (err, food) => {
-    if (err) {
-      return res.status(404).json({
-        err,
-        message: 'Food not found!',
-      });
-    }
-    food.name = body.name;
-    food.edible = body.edible;
-    food.dog_food = body.dog_food;
-    food.category = body.category;
-    food.tags = body.tags;
-    food.description = body.description;
-    food
-      .save()
-      .then(() => {
-        return res.status(200).json({
-          success: true,
-          id: food._id,
-          message: 'Food updated!',
-        });
-      })
-      .catch(error => {
-        return res.status(404).json({
-          error,
-          message: 'Food not updated!',
-        });
-      });
-  });
 });
 
 // foods.get('/seed', (req, res) => {

@@ -20,8 +20,8 @@ const FoodTable = props => (
     </thead>
     <tbody>
       {props.foods.length > 0 ? (
-        props.foods.map(food => (
-          <tr key={food.id}>
+        props.foods.map((food, i) => (
+          <tr key={i}>
             <td>{food.name}</td>
             <td>
               {food.edible ? (

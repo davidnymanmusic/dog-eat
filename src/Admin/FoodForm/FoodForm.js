@@ -7,7 +7,7 @@ import TagSelect from '../../components/TagSelect/TagSelect';
 import FoodTable from './FoodTable';
 import { APP_URL } from '../../constants';
 
-function NewFoodForm() {
+function FoodForm(props) {
   const fetchFood = async () => {
     await axios.get(APP_URL + 'foods').then(res => {
       const foodData = res.data;
@@ -45,7 +45,7 @@ function NewFoodForm() {
     setNewOpen(true);
     setFood(food);
     setTags(food.tags.map(f => ({ label: f, value: f })));
-    console.log(food);
+    console.log(tags);
   };
 
   useEffect(() => {
@@ -71,26 +71,6 @@ function NewFoodForm() {
       dog_food: dogfood,
     });
   };
-  const addFood = food => {
-    if (edit) {
-      axios.patch(`http://localhost:5000/api/foods/${food.id}`, food);
-      setTimeout(() => {
-        fetchFood();
-      }, 1000);
-    } else {
-      food.id = foodData.length + 1;
-      axios
-        .post(`http://localhost:5000/api/foods`, food)
-        .then(function(response) {
-          setFoodData([...foodData, food]);
-          console.log(response);
-          fetchFood();
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    }
-  };
   const deleteFood = id => {
     axios.delete(`http://localhost:5000/api/foods/${id}`).then(res => {
       setFoodData(foodData.filter(food => food._id !== id));
@@ -101,25 +81,28 @@ function NewFoodForm() {
   const handleSubmit = async e => {
     e.preventDefault();
     if (edit) {
-      console.log(food);
-      food.tags = food.tags.concat(tags);
+      if (tags !== null) {
+        food.tags = tags.map(t => t.label);
+      } else {
+        food.tags = [];
+      }
+
       axios
-        .patch(`http://localhost:5000/api/foods/${food._id}`, food)
+        .put(`http://localhost:5000/api/foods/${food._id}`, food)
         .then(res => console.log(res));
       setTimeout(() => {
         fetchFood();
       }, 1000);
     } else {
-      food.tags = tags;
-      console.log(food);
+      food.tags = tags.map(t => t.label);
       axios.post(`http://localhost:5000/api/foods`, food);
       setFood(initialState);
       setTags([]);
       fetchFood();
     }
   };
-  const selectTags = tags => {
-    if (tags) setTags(tags.map(t => t.value));
+  const selectTags = newTags => {
+    if (tags) setTags(newTags);
   };
 
   const filterFood = () => {
@@ -135,11 +118,16 @@ function NewFoodForm() {
   };
   useEffect(() => {
     filterFood();
-  }, [search]);
+  }, [search, foodData]);
+
   return (
     <div>
-      {/* {edit ? 'TRUE' : 'false'} */}
-      <button onClick={setNewOpen}>add new food</button>
+      <h1>{props.title}</h1>
+      {!newOpen ? (
+        <button onClick={() => setNewOpen(true)}>add new food</button>
+      ) : (
+        <button onClick={() => setNewOpen(false)}>close</button>
+      )}
       <br></br>
       <>
         {newOpen ? (
@@ -154,7 +142,10 @@ function NewFoodForm() {
             />
             <br />
             <br />
-            <TagSelect selectTags={selectTags} />
+            <TagSelect
+              selectTags={selectTags}
+              value={tags ? tags : undefined}
+            />
             <br />
             <textarea
               onChange={onChange}
@@ -204,7 +195,7 @@ function NewFoodForm() {
                 </label>
               </label>
             </div>
-            <button>SUBMIT</button>
+            <button id="bigbtn">SUBMIT</button>
           </form>
         ) : null}
         <input
@@ -222,4 +213,4 @@ function NewFoodForm() {
     </div>
   );
 }
-export default NewFoodForm;
+export default FoodForm;

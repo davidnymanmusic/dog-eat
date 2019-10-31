@@ -30,11 +30,21 @@ function AdminPage() {
             </Link>
           ))}
         </div>
+
         <div className="main">
           <Switch>
-            <Route path={'/admin/food'} component={FoodForm} />
-            <Route path={'/admin/category'} component={CategoryForm} />
-            <Route path={'/admin/tag'} component={TagForm} />
+            <Route
+              path={'/admin/food'}
+              component={() => <FoodForm title="Food Form" />}
+            />
+            <Route
+              path={'/admin/category'}
+              component={() => <CategoryForm title="Category Form" />}
+            />
+            <Route
+              path={'/admin/tag'}
+              component={() => <TagForm title="Tag Form" />}
+            />
           </Switch>
         </div>
       </div>
