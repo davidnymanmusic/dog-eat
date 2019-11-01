@@ -6,6 +6,7 @@ import axios from 'axios';
 import TagSelect from '../../components/TagSelect/TagSelect';
 import FoodTable from './FoodTable';
 import { APP_URL } from '../../constants';
+import Modal from '../../components/Modal';
 
 function FoodForm(props) {
   const fetchFood = async () => {
@@ -39,13 +40,13 @@ function FoodForm(props) {
   const [search, setSearch] = useState('');
 
   const [edit, setEdit] = useState(false);
+  const [show, setModal] = useState(false);
 
   const changeState = food => {
     setEdit(true);
-    setNewOpen(true);
+    setModal(true);
     setFood(food);
     setTags(food.tags.map(f => ({ label: f, value: f })));
-    console.log(tags);
   };
 
   useEffect(() => {
@@ -72,10 +73,13 @@ function FoodForm(props) {
     });
   };
   const deleteFood = id => {
-    axios.delete(`http://localhost:5000/api/foods/${id}`).then(res => {
-      setFoodData(foodData.filter(food => food._id !== id));
-    });
-    console.log('delete', id);
+    if (window.confirm('Press a button!')) {
+      return axios.delete(`http://localhost:5000/api/foods/${id}`).then(res => {
+        setFoodData(foodData.filter(food => food._id !== id));
+      });
+    } else {
+      return;
+    }
   };
 
   const handleSubmit = async e => {
@@ -121,18 +125,25 @@ function FoodForm(props) {
   useEffect(() => {
     filterFood();
   }, [search, foodData]);
-
+  const showModal = e => {
+    setModal(!show);
+  };
   return (
     <div>
       <h1>{props.title}</h1>
-      {!newOpen ? (
-        <button onClick={() => setNewOpen(true)}>add new food</button>
-      ) : (
-        <button onClick={() => setNewOpen(false)}>close</button>
-      )}
-      <br></br>
-      <>
-        {newOpen ? (
+      {!show ? (
+        <button
+          style={{ float: 'right' }}
+          onClick={e => {
+            setModal(e);
+          }}
+        >
+          Add New Food
+        </button>
+      ) : null}
+      <Modal onClose={showModal} show={show}>
+        <br></br>
+        <>
           <form className="form" onSubmit={handleSubmit}>
             <br />
             <input
@@ -204,14 +215,15 @@ function FoodForm(props) {
             </div>
             <button id="bigbtn">SUBMIT</button>
           </form>
-        ) : null}
-        <input
-          placeholder="Search for food"
-          onChange={e => {
-            setSearch(e.target.value);
-          }}
-        ></input>
-      </>
+        </>
+      </Modal>
+      <></>
+      <input
+        placeholder="Search for food"
+        onChange={e => {
+          setSearch(e.target.value);
+        }}
+      ></input>
       <FoodTable
         foods={filterFood()}
         editRow={food => changeState(food)}

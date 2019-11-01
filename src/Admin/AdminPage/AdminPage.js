@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import CategoryForm from '../CategoryForm';
 import TagForm from '../TagForm';
 import FoodForm from '../FoodForm/FoodForm';
+import Modal from '../../components/Modal';
 
 function AdminPage() {
   const sidebarList = [
@@ -30,7 +31,6 @@ function AdminPage() {
             </Link>
           ))}
         </div>
-
         <div className="main">
           <Switch>
             <Route

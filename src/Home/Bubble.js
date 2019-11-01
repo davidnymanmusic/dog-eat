@@ -22,9 +22,9 @@ function Bubble(props) {
             <span>.</span>
           </span>
         ) : props.edible ? (
-          'Yes'
+          `Yes${props.warning ? '*' : '!'}`
         ) : (
-          'No'
+          'No!'
         )}
       </span>
     </span>
