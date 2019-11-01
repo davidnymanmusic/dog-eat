@@ -143,9 +143,10 @@ function Home() {
         </div>
       ) : null}
       <a href="/admin">Admin</a>
-      <h1> Dog Eat ? </h1>
+      <h1 id="title"> Dog Eat ? </h1>
       <div className="description">
         <img className="arthur" src={image} alt="arthur" />
+
         <Bubble
           edible={food.edible}
           typing={typing}
@@ -154,7 +155,8 @@ function Home() {
               ? food.tags.some(r => warningWords.indexOf(r) >= 0) && food.edible
               : false
           }
-        ></Bubble>
+        />
+
         <br />
         {browse ? (
           <h1 className="placeholder" onClick={() => setBrowse(false)}>
@@ -225,6 +227,7 @@ function Home() {
                         setTagged([]);
                         fetchRelatedFoods('category', f.category, f.edible);
                         setBrowse(true);
+                        setTyping(false);
                       }}
                     >
                       {f.name}

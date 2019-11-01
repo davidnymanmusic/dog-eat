@@ -7,12 +7,16 @@
   text-align: center;
 }
 
+#title {
+  font-size: 4em;
+}
+
 .description {
   color: black;
   width: 50%;
-  position: relative;
+  /* position: relative; */
   margin: 0 auto;
-  padding-top: 8em;
+  padding-top: 2em;
   font-size: 1.2em;
 }
 h3 {
@@ -21,7 +25,11 @@ h3 {
   inline-size: fit-content;
   margin: 24px auto;
 }
-
+/* #bubble {
+  all: initial;
+  border: 1px solid rebeccapurple;
+  height: 100;
+} */
 h1 {
   font-size: larger;
 }
@@ -231,7 +239,8 @@ button {
   font-family: 'Futura-Bold', arial;
   font-size: 0.8em;
   width: 100%;
-  max-width: 500px;
+  max-width: 200px;
+  min-width: 100px;
   margin: 0px 19px;
 }
 .edible:focus {
@@ -284,7 +293,7 @@ button {
 .placeholder {
   border: none;
   border-bottom: 4px solid #999;
-  width: 300px;
+  width: 80%;
   font-family: 'Futura-Bold', arial;
   font-size: 2em;
   margin: 0 auto;
@@ -385,7 +394,8 @@ textarea {
   border: 2px solid black;
   color: black;
   z-index: 3;
-  position: sticky;
+  position: fixed;
+  left: 38px;
 }
 
 .foods:hover {
@@ -447,8 +457,8 @@ input:focus {
 
 .no-suggestions {
   color: #999;
-  padding: 0.5rem;
-  position: absolute;
+  padding: 1rem;
+  /* position: absolute; */
   left: 0;
   right: 0;
   margin-left: auto;
@@ -463,7 +473,7 @@ input:focus {
   max-height: 400px;
   overflow-y: auto;
   padding-left: 0;
-  width: 70%;
+  width: 40%;
   position: absolute;
   left: 0;
   right: 0;
@@ -479,7 +489,7 @@ input:focus {
 
 .suggestion-active,
 .suggestions li:hover {
-  background-color: black;
+  background-color: #999;
   color: white;
   cursor: pointer;
   font-weight: 700;
