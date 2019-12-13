@@ -1,13 +1,13 @@
-import React from 'react';
-import Modal from './Component/Modal';
-import './styles.css';
-class App extends React.Component {
+import React from "react";
+import Modal from "./Component/Modal";
+import "./styles.css";
+class ModalContainer extends React.Component {
   state = {
-    show: false,
+    show: false
   };
   showModal = e => {
     this.setState({
-      show: !this.state.show,
+      show: !this.state.show
     });
   };
   render() {
@@ -20,8 +20,8 @@ class App extends React.Component {
             this.showModal(e);
           }}
         >
-          {' '}
-          show Modal{' '}
+          {" "}
+          show Modal{" "}
         </button>
 
         <Modal onClose={this.showModal} show={this.state.show}>
@@ -35,4 +35,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default ModalContainer;

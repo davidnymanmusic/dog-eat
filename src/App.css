@@ -11,37 +11,61 @@
   font-size: 4em;
 }
 
-.description {
-  color: black;
-  width: 50%;
-  /* position: relative; */
-  margin: 0 auto;
-  padding-top: 2em;
-  font-size: 1.2em;
-}
 h3 {
   color: black;
   background-color: #eee;
   inline-size: fit-content;
   margin: 24px auto;
 }
-/* #bubble {
-  all: initial;
-  border: 1px solid rebeccapurple;
-  height: 100;
-} */
+
 h1 {
   font-size: larger;
+}
+
+.description {
+  color: black;
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 2em;
+  font-size: 1.2em;
 }
 
 .description p {
   text-align: left;
 }
 
+
+
 .arthur {
   width: 20%;
   height: 20%;
   min-width: 200px;
+}
+
+#bigbutton {
+  outline: none;
+  background-color: var(--green);
+  border: none;
+  padding: 1em;
+  color: white;
+  font-family: 'Futura-Bold', arial;
+  font-size: 1em;
+  width: 50%;
+  max-width: 500px;
+}
+
+button {
+  outline: none;
+  background-color: black;
+  border: none;
+  padding: 1em;
+  color: white;
+  font-family: 'Futura-Bold', arial;
+  font-size: 1em;
+  width: 20%;
+  max-width: 500px;
+  margin: 2px 6px;
+  cursor: pointer;
 }
 
 .tag-wrap {
@@ -51,8 +75,9 @@ h1 {
   flex-flow: wrap;
   font-size: 18px;
 }
+
 .tag-chip {
-  border-radius: 10 !important;
+  border-radius: 14px !important;
   cursor: pointer;
   inline-size: fit-content;
   padding: 12px;
@@ -62,12 +87,15 @@ h1 {
 }
 
 .tag-chip:hover {
-  border-radius: 0 !important;
+  text-decoration: underline !important;
+  text-decoration-color: white !important
 }
+
 .select {
   display: block;
 }
-œ .form {
+
+.form {
   margin: 3em;
   padding: 2em;
   line-height: 2em;
@@ -86,51 +114,6 @@ input[type='radio'] {
   outline: white;
 }
 
-.true input[type='radio'] {
-  padding-left: 5px;
-  padding-right: 5px;
-  border-radius: 15px;
-  -webkit-appearance: button;
-  background-color: 'white';
-  border: 4px solid var(--green);
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 20px;
-  height: 20px;
-}
-
-.false input[type='radio'] {
-  padding-left: 5px;
-  padding-right: 5px;
-  border-radius: 15px;
-  -webkit-appearance: button;
-  background-color: 'white';
-  border: 4px solid var(--red);
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 20px;
-  height: 20px;
-}
-
-.true input[type='radio']:checked {
-  border: 4px solid var(--green);
-  background-color: var(--green);
-}
-
-.false input[type='radio']:checked {
-  border: 4px solid var(--red);
-  background-color: var(--red);
-}
-
-input[type='checkbox']:checked {
-  box-shadow: 0 0 0 3px var(--green);
-}
-
-input[type='checkbox'] {
-  box-shadow: 0 0 0 3px var(--red);
-}
 
 .switch {
   position: relative;
@@ -176,15 +159,20 @@ input[type='checkbox'] {
   transition: 0.4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: var(--green);
 }
 
-input:focus + .slider {
+input+.slider {
+  background-color: var(--red);
+}
+
+
+input:focus+.slider {
   box-shadow: 0 0 1px var(--green);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(20px);
@@ -207,30 +195,8 @@ input:checked + .slider:before {
   width: 50%;
 }
 
-#bigbutton {
-  outline: none;
-  background-color: var(--green);
-  border: none;
-  padding: 1em;
-  color: white;
-  font-family: 'Futura-Bold', arial;
-  font-size: 1em;
-  width: 50%;
-  max-width: 500px;
-}
-button {
-  outline: none;
-  background-color: black;
-  border: none;
-  padding: 1em;
-  color: white;
-  font-family: 'Futura-Bold', arial;
-  font-size: 1em;
-  width: 20%;
-  max-width: 500px;
-  margin: 2px 6px;
-  cursor: pointer;
-}
+
+
 .toggle {
   outline: 2px solid black;
   border: none;
@@ -243,10 +209,12 @@ button {
   min-width: 100px;
   margin: 0px 19px;
 }
+
 .edible:focus {
   background-color: var(--green);
   color: white;
 }
+
 .inedible:focus {
   background-color: var(--red);
   color: white;
@@ -257,23 +225,28 @@ button {
   background-color: white;
   z-index: 30;
 }
+
 .edible {
   color: var(--green);
   background-color: white;
   z-index: 30;
 }
+
 .inedible:hover {
   background-color: var(--red);
   color: white;
 }
+
 .edible:hover {
   background-color: var(--green);
   color: white;
 }
+
 .fill-inedible {
   background-color: var(--red);
   color: white;
 }
+
 .fill-edible {
   background-color: var(--green);
   color: white;
@@ -290,6 +263,7 @@ button {
   max-width: 500px;
   margin: 2px 6px;
 }
+
 .placeholder {
   border: none;
   border-bottom: 4px solid #999;
@@ -334,7 +308,7 @@ tr:nth-child(2n) {
 }
 
 /* table>tbody>tr>td>button */
-table > tbody > tr > td > button {
+table>tbody>tr>td>button {
   outline: none;
   background-color: black;
   border: none;
@@ -353,7 +327,7 @@ select {
   color: #444;
   line-height: 2;
   padding: 0.5em;
-  width: 50%;
+  width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   margin: 0;
@@ -367,7 +341,7 @@ select {
 }
 
 textarea {
-  width: 80%;
+  width: 100%;
   height: 10em;
   font-size: large;
 }
@@ -389,6 +363,7 @@ textarea {
   padding: 26px;
   padding-top: 5em;
 }
+
 .hide {
   background-color: white;
   border: 2px solid black;
@@ -435,7 +410,7 @@ li a {
   text-decoration: none;
 }
 
-.sidenav > a > p {
+.sidenav>a>p {
   color: black;
 }
 
@@ -451,6 +426,7 @@ input {
   font-family: 'Futura-Bold', arial;
   font-size: 2em;
 }
+
 input:focus {
   outline-color: #aaa;
 }
@@ -606,50 +582,62 @@ input:focus {
     transform: rotateY(90deg);
   }
 }
+
 @keyframes dots-1 {
   from {
     opacity: 0;
   }
+
   25% {
     opacity: 1;
   }
 }
+
 @keyframes dots-2 {
   from {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
 }
+
 @keyframes dots-3 {
   from {
     opacity: 0;
   }
+
   75% {
     opacity: 1;
   }
 }
+
 @-webkit-keyframes dots-1 {
   from {
     opacity: 0;
   }
+
   25% {
     opacity: 1;
   }
 }
+
 @-webkit-keyframes dots-2 {
   from {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
 }
+
 @-webkit-keyframes dots-3 {
   from {
     opacity: 0;
   }
+
   75% {
     opacity: 1;
   }
@@ -661,13 +649,13 @@ input:focus {
   color: black !important;
 }
 
-.dots span:first-child + span {
+.dots span:first-child+span {
   animation-name: dots-2;
   -webkit-animation-name: dots-2;
   color: black !important;
 }
 
-.dots span:first-child + span + span {
+.dots span:first-child+span+span {
   animation-name: dots-3;
   -webkit-animation-name: dots-3;
   color: black !important;
