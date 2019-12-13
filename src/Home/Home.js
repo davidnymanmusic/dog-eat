@@ -142,7 +142,9 @@ function Home() {
           </ul>
         </div>
       ) : null}
-      <a href="/admin">Admin</a>
+      {process.env.NODE_ENV === 'development' ? (
+        <a href="/admin">Admin</a>
+      ) : null}
       <h1 id="title"> Dog Eat ? </h1>
       <div className="description">
         <img className="arthur" src={image} alt="arthur" />
