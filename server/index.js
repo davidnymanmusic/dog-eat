@@ -32,6 +32,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+app.get('/api/test', (req, res) => {
+  res.json({ test: 'test' });
+});
 // app.use('/api', foodRouter);
 app.use('/api/foods', routes.foodRouter);
 app.use('/api/tags', routes.tagRouter);
