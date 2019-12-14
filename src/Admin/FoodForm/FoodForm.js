@@ -74,7 +74,7 @@ function FoodForm(props) {
   };
   const deleteFood = id => {
     if (window.confirm('Press a button!')) {
-      return axios.delete(`http://localhost:5000/api/foods/${id}`).then(res => {
+      return axios.delete(`${APP_URL}foods/${id}`).then(res => {
         setFoodData(foodData.filter(food => food._id !== id));
       });
     } else {
@@ -92,7 +92,7 @@ function FoodForm(props) {
       }
 
       axios
-        .put(`http://localhost:5000/api/foods/${food._id}`, food)
+        .put(`${APP_URL}foods/${food._id}`, food)
         .then(res => console.log(res));
       setFood(initialState);
       setTags([]);
@@ -102,7 +102,7 @@ function FoodForm(props) {
       }, 1000);
     } else {
       food.tags = tags.map(t => t.label);
-      axios.post(`http://localhost:5000/api/foods`, food);
+      axios.post(`${APP_URL}foods`, food);
       setFood(initialState);
       setTags([]);
       fetchFood();

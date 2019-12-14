@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import CreatableSelect from 'react-select/creatable';
 import axios from 'axios';
+import { APP_URL } from '../../constants';
 
 const TagSelect = props => {
   useEffect(() => {
@@ -9,7 +10,7 @@ const TagSelect = props => {
   }, []);
 
   const fetchTags = async () => {
-    await axios.get('http://localhost:5000/api/tags').then(res => {
+    await axios.get(APP_URL + 'tags').then(res => {
       let tagsData = res.data.data;
       tagsData = tagsData.map(c => ({
         label: c.name,

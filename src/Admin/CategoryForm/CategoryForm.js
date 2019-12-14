@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { useToggle } from '../../hooks/useToggle';
 import CategoryTable from './CategoryTable';
+import { APP_URL } from '../../constants';
 
 function CategoryForm(props) {
   useEffect(() => {
@@ -10,7 +11,7 @@ function CategoryForm(props) {
   }, []);
 
   const fetchCategories = async () => {
-    await axios.get('http://localhost:5000/api/categories').then(res => {
+    await axios.get(APP_URL + 'categories').then(res => {
       const categoriesData = res.data;
       setCategories(categoriesData.data);
     });
@@ -43,16 +44,13 @@ function CategoryForm(props) {
 
   const addCategory = category => {
     if (edit) {
-      axios.put(
-        `http://localhost:5000/api/categories/${category._id}`,
-        category,
-      );
+      axios.put(APP_URL + `categories/${category._id}`, category);
       setTimeout(() => {
         fetchCategories();
       }, 1000);
     } else {
       axios
-        .post(`http://localhost:5000/api/categories`, category)
+        .post(APP_URL + `categories`, category)
         .then(function(response) {
           setCategories([...categories, category]);
           console.log(response);
@@ -66,7 +64,7 @@ function CategoryForm(props) {
 
   const deleteCategory = id => {
     //  setEditing(false);
-    axios.delete(`http://localhost:5000/api/categories/${id}`).then(res => {
+    axios.delete(APP_URL + `categories/${id}`).then(res => {
       setCategories(categories.filter(category => category._id !== id));
     });
   };

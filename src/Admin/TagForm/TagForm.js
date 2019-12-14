@@ -61,7 +61,7 @@ function TagForm(props) {
 
   const deleteTag = id => {
     //  setEditing(false);
-    axios.delete(`http://localhost:5000/api/tag/${id}`).then(res => {
+    axios.delete(`${APP_URL}/tag/${id}`).then(res => {
       setTags(tags.filter(tag => tag.id !== id));
     });
   };

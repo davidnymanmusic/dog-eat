@@ -9,6 +9,16 @@ const db = require('./db');
 
 const routes = require('./routes');
 
+const EventEmitter = require('events');
+
+class MyEmitter extends EventEmitter {}
+
+const myEmitter = new MyEmitter();
+// increase the limit
+myEmitter.setMaxListeners(11);
+
+myEmitter.emit('event');
+
 const app = express();
 const PORT = 5000;
 
