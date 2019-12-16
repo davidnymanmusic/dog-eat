@@ -28,10 +28,6 @@ app.use(bodyParser.json());
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
 app.get('/api/test', (req, res) => {
   res.json({ test: 'test' });
 });
