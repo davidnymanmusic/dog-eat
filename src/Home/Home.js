@@ -133,6 +133,7 @@ function Home() {
                       onClick={() => {
                         setBrowse(true);
                         setFood(f);
+                        setTagged([]);
                       }}
                     >
                       {f.name}
@@ -146,7 +147,6 @@ function Home() {
         <a href="/admin">Admin</a>
       ) : null}
       <h1 id="title"> Dog Eat ? </h1>
-      <a href={APP_URL + 'test'}>CLICK</a>
       <div className="description">
         <img className="arthur" src={image} alt="arthur" />
 
