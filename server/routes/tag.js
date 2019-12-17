@@ -57,4 +57,20 @@ tags.put('/:id', async (request, response) => {
     response.status(500).send(error);
   }
 });
+
+tags.delete('/:id', async (req, res) => {
+  console.log('delete');
+  await Tag.findOneAndDelete({ _id: req.params.id }, (err, tag) => {
+    if (err) {
+      return res.status(400).json({ success: false, error: err });
+    }
+
+    if (!tag) {
+      return res.status(404).json({ success: false, error: `Food not found` });
+    }
+
+    return res.status(200).json({ success: true, data: tag });
+  }).catch(err => console.log(err));
+});
+
 module.exports = tags;

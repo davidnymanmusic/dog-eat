@@ -20,6 +20,14 @@ function FoodForm(props) {
       setCategories(categoriesData.data);
     });
   };
+  const fetchPreviousTags = async () => {
+    await axios.get(APP_URL + 'tags').then(res => {
+      const previousTagsData = res.data;
+      const mappedtags = previousTagsData.data.map(t => t.name);
+      console.log(mappedtags);
+      setPreviousTags(mappedtags);
+    });
+  };
 
   const initialState = {
     name: '',
@@ -30,6 +38,7 @@ function FoodForm(props) {
     tags: [],
   };
   const [categories, setCategories] = useState([]);
+  const [previousTags, setPreviousTags] = useState([]);
   const [foodData, setFoodData] = useState([]);
   const [food, setFood] = useState(initialState);
   const [edible, setEdible] = useToggle(true);
@@ -52,6 +61,7 @@ function FoodForm(props) {
   useEffect(() => {
     fetchFood();
     fetchCategories();
+    fetchPreviousTags();
   }, []);
 
   const onChange = e => {
@@ -83,14 +93,16 @@ function FoodForm(props) {
   };
 
   const handleSubmit = async e => {
+    let intersection = tags
+      .map(t => t.label)
+      .filter(x => !previousTags.includes(x));
     e.preventDefault();
     if (edit) {
       if (tags !== null) {
-        food.tags = tags.map(t => t.label);
+        food.tags = tags.map(t => t.label.toLowerCase());
       } else {
         food.tags = [];
       }
-
       axios
         .put(`${APP_URL}foods/${food._id}`, food)
         .then(res => console.log(res));
@@ -101,13 +113,17 @@ function FoodForm(props) {
         fetchFood();
       }, 1000);
     } else {
-      food.tags = tags.map(t => t.label);
+      food.tags = tags.map(t => t.label.toLowerCase());
       axios.post(`${APP_URL}foods`, food);
       setFood(initialState);
       setTags([]);
       fetchFood();
       setModal(false);
     }
+
+    intersection.map(i =>
+      axios.post(`${APP_URL}tags`, { name: i.toLowerCase() }),
+    );
   };
   const selectTags = newTags => {
     if (tags) setTags(newTags);

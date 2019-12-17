@@ -5,6 +5,7 @@ import Autocomplete from '../components/Autocomplete';
 import { APP_URL } from '../constants';
 import { useToggle } from '../hooks/useToggle';
 import Bubble from './Bubble';
+import { useAuth0 } from '../react-auth0-spa';
 
 const warningWords = ['choking', 'caution'];
 
@@ -19,6 +20,8 @@ const green = '#45c640';
 const red = '#f20a42';
 
 function Home() {
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
   const [image, setImage] = useState(images[currentImage]);
   const [food, setFood] = useState({});
   const [foodData, setFoodData] = useState([]);
@@ -143,9 +146,10 @@ function Home() {
           </ul>
         </div>
       ) : null}
-      {process.env.NODE_ENV === 'development' ? (
+      {process.env.NODE_ENV === 'development' || isAuthenticated ? (
         <a href="/admin">Admin</a>
       ) : null}
+      {/* <button onClick={() => loginWithRedirect({})}>Log in</button> */}
       <h1 id="title"> Dog Eat ? </h1>
       <div className="description">
         <img className="arthur" src={image} alt="arthur" />

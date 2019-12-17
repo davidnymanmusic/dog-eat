@@ -24,7 +24,8 @@ const TagTable = props => (
               </button>
               <button
                 onClick={() => {
-                  props.deleteTag(tag.id);
+                  console.log(tag);
+                  props.deleteTag(tag._id);
                 }}
               >
                 Delete

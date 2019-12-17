@@ -24,7 +24,7 @@ const CategoryTable = props => (
               </button>
               <button
                 onClick={() => {
-                  props.deleteCategory(category.id);
+                  props.deleteCategory(category._id);
                 }}
               >
                 Delete
