@@ -37,10 +37,13 @@ app.use('/api/tags', routes.tagRouter);
 app.use('/api/categories', routes.categoryRouter);
 app.use('/api/queries', routes.queryRouter);
 
-app.use(express.static(path.join(__dirname, '..', 'build')));
-
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'build')));
 // Handle React routing by returning all requests to client
-app.get('/*', (req, res) => {
+app.get('/ping', function(req, res) {
+  return res.send('pong');
+});
+app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
